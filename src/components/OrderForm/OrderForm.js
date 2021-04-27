@@ -6,7 +6,8 @@ class OrderForm extends Component {
     this.props = props;
     this.state = {
       name: '',
-      ingredients: []
+      ingredients: [],
+      message: ''
     };
   }
 
@@ -16,11 +17,13 @@ class OrderForm extends Component {
     if(this.state.name && this.state.ingredients.length) {
       this.props.submitNewOrder({name: this.state.name, ingredients: this.state.ingredients})
       this.clearInputs();
+    } else {
+      this.setState({message: 'Please enter a name and choose an ingredient before submitting'})
     }
   }
 
   clearInputs = () => {
-    this.setState({name: '', ingredients: []});
+    this.setState({name: '', ingredients: [], message: ''});
   }
 
   handleIngredientChange = (e) => {
@@ -44,23 +47,28 @@ class OrderForm extends Component {
     });
 
     return (
-      <form>
-        <input
-          type='text'
-          placeholder='Name'
-          name='name'
-          value={this.state.name}
-          onChange={e => this.handleNameChange(e)}
-        />
+      <>
+        <form>
+          <input
+            type='text'
+            placeholder='Name'
+            name='name'
+            value={this.state.name}
+            onChange={e => this.handleNameChange(e)}
+          />
 
-        { ingredientButtons }
+          { ingredientButtons }
 
-        <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
+          <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
 
-        <button onClick={e => this.handleSubmit(e)}>
-          Submit Order
-        </button>
-      </form>
+          <button onClick={e => this.handleSubmit(e)}>
+            Submit Order
+          </button>
+        </form>
+
+        {this.state.message && <p>{this.state.message}</p>}
+
+      </>
     )
   }
 }
