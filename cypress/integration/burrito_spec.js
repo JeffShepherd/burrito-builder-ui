@@ -100,4 +100,54 @@ describe('Home page', () => {
 
 describe('Sad paths', () => {
 
+  it('Should show an error message when the initial GET request fails', () => {
+    cy.intercept(
+      'GET',
+      'http://localhost:3001/api/v1/orders',
+      {
+        statusCode: 500,
+        body: ''
+      }
+    )
+    cy.visit('http://localhost:3000/')
+    cy.get('header')
+      .contains('An error has occured. Please try again later.')
+  })
+
+  beforeEach(() => {
+    cy.fixture('orders.json')
+    .then(orderData => {
+      cy.intercept(
+        'GET',
+        'http://localhost:3001/api/v1/orders',
+        {
+          statusCode: 200,
+          body: orderData
+        }
+      )
+    })
+
+    cy.visit('http://localhost:3000/')
+  })
+
+  it('Should show an error message when a POST request fails', () => {
+    cy.intercept(
+      'POST',
+      'http://localhost:3001/api/v1/orders',
+      {
+        statusCode: 500,
+        body: ''
+      }
+    )
+    cy.get('button[id=beans]')
+      .click()
+    cy.get('input')
+      .type('Joe')
+    cy.get('.submit-order-button')
+      .click()
+    cy.get('header')
+      .contains('An error has occured. Please try again later.')
+  })
+
+
 })
