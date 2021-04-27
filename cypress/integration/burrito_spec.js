@@ -169,8 +169,7 @@ describe('Sad paths', () => {
   //     'DELETE',
   //     'http://localhost:3001/api/v1/orders/3',
   //     {
-  //       statusCode: 500,
-  //       body: ''
+  //       statusCode: 404
   //     }
   //   )
   //   cy.get('button[id=Alexis]')
