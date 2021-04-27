@@ -93,6 +93,21 @@ describe('Home page', () => {
       .and('contain', 'Sami')
   })
 
+    it('Should remove an order when clicking delete button on it', () => {
+      cy.intercept(
+        'DELETE',
+        'http://localhost:3001/api/v1/orders/3',
+        {
+          statusCode: 204
+        }
+      )
+      cy.get('button[id=Alexis]')
+        .click()
+        cy.get('section')
+        .children()
+        .should('have.length', 2)
+    })
+
 })
 
 
@@ -148,6 +163,21 @@ describe('Sad paths', () => {
     cy.get('header')
       .contains('An error has occured. Please try again later.')
   })
+
+  // it('Should show an error message when a DELETE request fails', () => {
+  //   cy.intercept(
+  //     'DELETE',
+  //     'http://localhost:3001/api/v1/orders/3',
+  //     {
+  //       statusCode: 500,
+  //       body: ''
+  //     }
+  //   )
+  //   cy.get('button[id=Alexis]')
+  //     .click()
+  //   cy.get('header')
+  //     .contains('An error has occured. Please try again later.')
+  // })
 
 
 })
