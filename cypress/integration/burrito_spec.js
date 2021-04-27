@@ -21,5 +21,35 @@ describe('Home page', () => {
       .contains('Burrito Builder')
   })
 
+  it('Should not have any ingredients selected on page load', () => {
+    cy.get('form')
+      .contains('Nothing selected')
+  })
+
+  it('Should have buttons for ingredients', () => {
+    cy.get('button[id=beans]')
+      .should('be.visible')
+    cy.get('button[id=cilantro]')
+      .should('be.visible')
+  })
+
+  it('Should have a button to submit the order', () => {
+    cy.get('.submit-order-button')
+      .should('be.visible')
+  })
+
+  it('Should reflect 3 existing orders on page load', () => {
+    cy.get('section')
+      .children()
+      .should('have.length', 3)
+      .should('contain', 'Sami')
+      .and('contain', 'Pete')
+      .and('contain', 'Alexis')
+  })
+
+})
+
+
+describe('Sad paths', () => {
 
 })
