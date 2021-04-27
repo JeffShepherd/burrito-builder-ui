@@ -66,7 +66,7 @@ class OrderForm extends Component {
           </button>
         </form>
 
-        {this.state.message && <p>{this.state.message}</p>}
+        {this.state.message && <p className="warning-message">{this.state.message}</p>}
 
       </>
     )

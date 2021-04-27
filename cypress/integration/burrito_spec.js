@@ -47,7 +47,28 @@ describe('Home page', () => {
       .and('contain', 'Alexis')
   })
 
+  it('Should not allow a user to submit an order if a name hasn\'t been entered', () => {
+    cy.get('button[id=beans]')
+      .click()
+    cy.get('.submit-order-button')
+      .click()
+    cy.get('.warning-message')
+      .contains('Please enter a name and choose an ingredient before submitting')
+  })
+
+  it('Should not allow a user to submit an order if an ingredient hasn\'t been selected', () => {
+    cy.get('input')
+      .type('Jeff')
+    cy.get('.submit-order-button')
+      .click()
+    cy.get('.warning-message')
+      .contains('Please enter a name and choose an ingredient before submitting')
+  })
+
+
 })
+
+
 
 
 describe('Sad paths', () => {
