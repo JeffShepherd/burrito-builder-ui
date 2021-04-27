@@ -26,6 +26,18 @@ class App extends Component {
       .catch(err => this.setState({error: 'An error has occured. Please try again later.'}));
   }
 
+  deleteOrder = (id) => {
+    fetch(`http://localhost:3001/api/v1/orders/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(this.setState({orders: this.state.orders.filter(order => order.id !== id)}))
+    .catch(err => this.setState({error: 'An error has occured. Please try again later.'}))
+  }
+
+
   render() {
     return (
       <main className="App">
@@ -35,7 +47,7 @@ class App extends Component {
           <OrderForm submitNewOrder={this.submitNewOrder}/>
         </header>
 
-        <Orders orders={this.state.orders}/>
+        <Orders deleteOrder={this.deleteOrder} orders={this.state.orders}/>
       </main>
     );
   }
