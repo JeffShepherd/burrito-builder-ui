@@ -9,14 +9,15 @@ class App extends Component {
     super();
 
     this.state = {
-      orders: []
+      orders: [],
+      error: ''
     }
   }
 
   componentDidMount() {
     getOrders()
       .then(allOrders => this.setState({orders: allOrders.orders}))
-      .catch(err => console.error('Error fetching:', err));
+      .catch(err => this.setState({error: 'An error has occured. Please try again later.'}));
   }
 
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
       <main className="App">
         <header>
           <h1>Burrito Builder</h1>
+          {this.state.error && <p>{this.state.error}</p>}
           <OrderForm />
         </header>
 
