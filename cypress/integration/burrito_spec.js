@@ -1,4 +1,5 @@
 describe('Home page', () => {
+
   beforeEach(() => {
     cy.fixture('orders.json')
     .then(orderData => {
@@ -12,6 +13,17 @@ describe('Home page', () => {
       )
     })
 
+    cy.fixture('newOrder.json')
+    .then(newOrderData => {
+      cy.intercept(
+        'POST',
+        'http://localhost:3001/api/v1/orders',
+        {
+          statusCode: 200,
+          body: newOrderData
+        }
+      )
+    })
 
     cy.visit('http://localhost:3000/')
   })
@@ -65,6 +77,21 @@ describe('Home page', () => {
       .contains('Please enter a name and choose an ingredient before submitting')
   })
 
+  it('Should reflect a new order after submitting one', () => {
+    cy.get('button[id=beans]')
+      .click()
+    cy.get('input')
+      .type('Joe')
+    cy.get('.submit-order-button')
+      .click()
+    cy.get('section')
+      .children()
+      .should('have.length', 4)
+      .should('contain', 'Joe')
+      .and('contain', 'Pete')
+      .and('contain', 'Alexis')
+      .and('contain', 'Sami')
+  })
 
 })
 
