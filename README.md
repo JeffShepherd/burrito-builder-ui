@@ -1,4 +1,4 @@
-# Burrito Builder UI
+# Burrito Builder UI - 3 hour timed final
 
 Our company is building a prototype ticketing system for a local burrito shop. Unfortunately, the form dev on the project recently quit, leaving behind a broken app and little to no documentation. It's your job to save the project!
 
